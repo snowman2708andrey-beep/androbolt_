@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AndroBolt</title>
+<style>
+body{margin:0;font-family:Segoe UI,Arial;background:#f5f7f6;color:#222}
+header{position:sticky;top:0;background:#fff;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.logo{font-size:30px;font-weight:800;color:#1d5c3f}
+nav a{margin:0 10px;text-decoration:none;color:#333}
+.hero{padding:90px 20px;text-align:center;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80');background-size:cover;color:#fff}
+.hero h1{font-size:58px;margin:0}
+.hero h2{font-size:34px}
+.btn{background:#1d5c3f;color:#fff;padding:12px 20px;border:none;border-radius:12px;cursor:pointer;margin:5px}
+.wrap{max-width:1200px;margin:auto;padding:40px 20px}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.card{background:#fff;border-radius:24px;padding:25px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.big{background:url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=80') center/cover;color:#fff;min-height:320px}
+.small1{background:url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80') center/cover;color:#fff}
+.small2{background:url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80') center/cover;color:#fff}
+.overlay{background:rgba(0,0,0,.45);padding:20px;border-radius:20px;height:100%}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);justify-content:center;align-items:center}
+.box{background:#fff;padding:20px;border-radius:20px;width:min(520px,95%)}
+input,select,textarea{width:100%;padding:10px;margin:6px 0}
+.avatar span{font-size:32px;cursor:pointer;padding:6px}
+.profile{font-weight:bold}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.hero h1{font-size:42px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">AndroBolt</div>
+<nav>
+<a href="#about">Par mums</a>
+<a href="#concerts">Koncerti</a>
+<a href="#bakery">Konditoreja</a>
+<a href="#delivery">Piegāde</a>
+</nav>
+<div>
+<span id="profile" class="profile"></span>
+<button onclick="reg()">👤</button>
+</div>
+</header>
+
+<section class="hero">
+<h1>AndroBolt</h1>
+<p>Mūzika · Konditoreja · Piegāde</p>
+<h2>Viens vārds.<br>Trīs labas lietas.</h2>
+<p>AndroBolt ir grupa, kaimiņu konditoreja un draudzīgs piegādes serviss.</p>
+<button class="btn" onclick="openOrder('Kruasāns')">Pasūtīt konditoreju</button>
+<button class="btn" onclick="openOrder('Koncerts Rīga')">Skatīt koncertus</button>
+</section>
+
+<div class="wrap" id="about">
+<div class="grid">
+<div class="card big" id="concerts"><div class="overlay">
+<h2>🎵 Koncerti</h2>
+<p>Rīga — Augusta Deglava iela 106 k-3</p>
+<p>Rēzeknes lauki</p>
+<button class="btn" onclick="openOrder('Koncerts Rīga')">Pirkt biļeti</button>
+</div></div>
+
+<div>
+<div class="card small1" id="bakery"><div class="overlay">
+<h3>🥐 Konditoreja</h3>
+<p>Garšu norādi komentārā.</p>
+<button class="btn" onclick="openOrder('Kruasāns')">Pasūtīt</button>
+</div></div>
+
+<div class="card small2" id="delivery" style="margin-top:20px"><div class="overlay">
+<h3>🚚 Piegāde</h3>
+<p>No jebkura veikala.</p>
+<button class="btn" onclick="openOrder('Piegāde')">Pasūtīt</button>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="modal" id="orderModal">
+<div class="box">
+<h2>Pasūtījums</h2>
+<select id="service">
+<option>Kruasāns</option>
+<option>Koncerts Rīga</option>
+<option>Koncerts Rēzekne</option>
+<option>Piegāde</option>
+</select>
+<textarea id="comment" placeholder="Komentārs vai kruasāna garša"></textarea>
+<input id="name" placeholder="Vārds">
+<input id="surname" placeholder="Uzvārds">
+<input id="phone" placeholder="+371">
+<button class="btn" onclick="sendOrder()">Nosūtīt pieteikumu</button>
+<p>Mēs sazināsimies ar jums un precizēsim detaļas.</p>
+</div>
+</div>
+
+<div class="modal" id="regModal">
+<div class="box">
+<h2>Reģistrācija</h2>
+<input id="rname" placeholder="Vārds">
+<input id="rphone" placeholder="Telefons">
+<div class="avatar">
+<span onclick="pickAvatar('🍪')">🍪</span>
+<span onclick="pickAvatar('😎')">😎</span>
+<span onclick="pickAvatar('🥐')">🥐</span>
+<span onclick="pickAvatar('🥯')">🥯</span>
+<span onclick="pickAvatar('🥟')">🥟</span>
+<span onclick="pickAvatar('🥤')">🥤</span>
+</div>
+<p>Avataru pēc reģistrācijas mainīt nevar.</p>
+<button class="btn" onclick="saveReg()">Reģistrēties</button>
+</div>
+</div>
+
+<script>
+let avatar='';
+function openOrder(s){orderModal.style.display='flex';service.value=s;}
+window.onclick=e=>{if(e.target.className==='modal')e.target.style.display='none';}
+function sendOrder(){
+if(!name.value||!surname.value||!phone.value){alert('Aizpildi laukus');return;}
+emailjs.send('service_m4nd85h','template_1lwr40z',{
+service:service.value,comment:comment.value,name:name.value,surname:surname.value,phone:phone.value
+}).then(function(){
+alert(`Paldies!
+
+Mēs saņēmām jūsu pieteikumu.
+
+Drīzumā sazināsimies ar jums un precizēsim detaļas.`);
+comment.value='';name.value='';surname.value='';phone.value='';orderModal.style.display='none';
+}).catch(function(e){console.log(e);alert('Kļūda nosūtot pieteikumu');});
+}
+function reg(){ if(localStorage.user){alert('Profils jau izveidots');return;} regModal.style.display='flex';}
+function pickAvatar(a){avatar=a;}
+function saveReg(){
+if(!rname.value||!rphone.value||!avatar){alert('Aizpildi visu un izvēlies avataru');return;}
+localStorage.user=JSON.stringify({n:rname.value,p:rphone.value,a:avatar});
+showUser(); regModal.style.display='none';
+}
+function showUser(){
+if(localStorage.user){
+let u=JSON.parse(localStorage.user);
+profile.textContent=u.a+' '+u.n;
+}
+}
+showUser();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><script>emailjs.init({publicKey:"9LVr2VkjH-lnvRxiC"});</script></body></html>
